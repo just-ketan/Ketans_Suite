@@ -2,209 +2,228 @@
 Code Snippets of common coding questions
 # every def is a new code 
 
-def is_bst(root):
-    def helper(node, left, right):
-        if not node:
-            return True # we reached the end and there are no more violations
-        if node.val <= left or node.val >= right:
-            return False    # a value can never be lesser than left bound and greater than right bound in a substree
-        
-        return helper(node.left, left, node.val) and helper(node.right, node.val, right)
-        #when we go down left, the upper bound will be the root node val    lc <= root
-        # when we go down right, the lower bound will be the root node      rc >= root
-    
-    return is_bst(root, float('-inf'), float('inf'))
-    
 
-def first_non_repeating_char(st:str)->str:
-    mp = {}
-    # or mp = defaultdict(int)
-    
-    for s in st:
-        if s in mp:
-            mp[s] += 1 
-        else:
-            mp[s] = 1 
-    
-    for s in st:
-        if mp[s] == 1:
-            return s.index()
-    
-    return -1
-    
-def reverse_link_list():
-    # to reverse a link list
-    # 1(prev) -> 2(curr) -> 3(next) -> None
-    # we will swap the links one at a time such that
-    # 1 <- 2 -> 3
-    # 1 <- 2 <- 3
-    
-    prev = None
-    curr = head
-    while curr:
-        nxt = curr.next
+Is the tree bst ?
+
+    def is_bst(root):
+        def helper(node, left, right):
+            if not node:
+                return True # we reached the end and there are no more violations
+            if node.val <= left or node.val >= right:
+                return False    # a value can never be lesser than left bound and greater than right bound in a substree
+            
+            return helper(node.left, left, node.val) and helper(node.right, node.val, right)
+            #when we go down left, the upper bound will be the root node val    lc <= root
+            # when we go down right, the lower bound will be the root node      rc >= root
         
-        # main reversing logic
-        curr.next = prev
-        prev = curr
-        curr = nxt
-    return prev
-    
-    # 1(prev) -> 2(curr) -> 3(next) -> None
-    # None (prev)
-    # curr = head = 1 
-    # nxt = curr.next   =>      nxt = 2
-    # curr.next = prev  =>      1 -> None
-    # prev = curr       => prev = 1 
-    # curr = nxt        => curr = 2
+        return is_bst(root, float('-inf'), float('inf'))
+
+finid the first non repeating character
+
+    def first_non_repeating_char(st:str)->str:
+        mp = {}
+        # or mp = defaultdict(int)
         
-    # nxt = curr.next   =>      nxt = 3
-    # curr.next = prev  =>      2 -> 1 -> None
-    # prev = curr       => prev = 2 
-    # curr = nxt        => curr = 3
+        for s in st:
+            if s in mp:
+                mp[s] += 1 
+            else:
+                mp[s] = 1 
+        
+        for s in st:
+            if mp[s] == 1:
+                return s.index()
+        
+        return -1
+
+reverse a linked list
+
+    def reverse_link_list():
+        # to reverse a link list
+        # 1(prev) -> 2(curr) -> 3(next) -> None
+        # we will swap the links one at a time such that
+        # 1 <- 2 -> 3
+        # 1 <- 2 <- 3
+        
+        prev = None
+        curr = head
+        while curr:
+            nxt = curr.next
+            
+            # main reversing logic
+            curr.next = prev
+            prev = curr
+            curr = nxt
+        return prev
+        
+        # 1(prev) -> 2(curr) -> 3(next) -> None
+        # None (prev)
+        # curr = head = 1 
+        # nxt = curr.next   =>      nxt = 2
+        # curr.next = prev  =>      1 -> None
+        # prev = curr       => prev = 1 
+        # curr = nxt        => curr = 2
+            
+        # nxt = curr.next   =>      nxt = 3
+        # curr.next = prev  =>      2 -> 1 -> None
+        # prev = curr       => prev = 2 
+        # curr = nxt        => curr = 3
+        
+        # nxt = curr.next   =>      nxt = None
+        # curr.next = prev  =>      3 -> 2 -> 1 -> None
+        # prev = curr       => prev = 3 
+        # curr = nxt        => curr = None      --> while loop breaks
+        
+        # return prev -> returns the new head, that is 3
+        # 3 -> 2 -> 1 is returned
+
+implement quicksort
+
+    def quicksort(arr):
+        if len(arr) <= 1:
+            return arr
+        
+        pivot = len(arr) // 2
+        left = [ l for l in arr if l < pivot]       # list of entries less than pivot
+        middle = [ m for m in arr if m == pivot ]   # list of entries equal to pivot
+        right = [ r for r in arr if r > pivot]      # list of entries greater than pivot
+        
+        return quicksort(left) + middle + quicksort(right)      # recursive call to invoke the call stack
+
+two sum
+
+    def twosum(arr,target):
+        mp = {} 
+        for i in range(len(arr)):
+            mp[arr[i]] = i      # mapping number to its index
+        
+        for i in range(len(arr)):
+            comp = target - arr[i]      # finding complement, 2+3 = 5, them there must be a 5-2 in mp if we finding twosum for 2 
+            if comp in mp:
+                return [i, mp[comp]]
+        
+        return [-1,-1]      # not found
+
+max subarray sum
+
+    def maxsubarraysum(arr,l,r):
+        # need to find sum of subarrays starting from left, inclusive of r
+        # we implement prefix sum
+        pfx = []
+        summ = 0
+        for i in arr:
+            summ += i
+            pfx.append(summ)
+            # at every index i, we get the summ till ith element
+        
+        return (pfx[r] - pfx[l])        # this gives the exact sum in O(n) time
     
-    # nxt = curr.next   =>      nxt = None
-    # curr.next = prev  =>      3 -> 2 -> 1 -> None
-    # prev = curr       => prev = 3 
-    # curr = nxt        => curr = None      --> while loop breaks
     
-    # return prev -> returns the new head, that is 3
-    # 3 -> 2 -> 1 is returned
     
-def quicksort(arr):
-    if len(arr) <= 1:
+<----------Divide and Conquer mergesort --------------->
+merge sort
+
+    def mergesort(arr):
+        if len(arr) <= 1: return arr
+        
+        mid = len(arr) // 2 
+        
+        left = mergesort(arr[:mid])
+        right = mergesort(arr[mid:])        # recursive calls to break down left and right segments till unit block of element remains
+        
+        return merger(left,right)       # will have 2^n merge calls in recursive call stack, on the way up, it will build back the sorted array 
+            
+    def merge(left,right):
+        res = []
+        i = j= 0
+        while i < len(left) and right < len(right):
+            if left[i] <= right[j]:
+                res.append(left[i])
+                i+=1 
+            else:
+                res.append(right[j])
+                j += 1 
+        
+        res.extend(left[i:])        # for leftover elements in left and right, it extends res and copies values into res 
+        res.extend(right[j:])
+        
+        return res
+            
+            
+selection sort
+
+    def selection_sort(arr):        # repeatedly swap smaller elements with larger elements 
+        for i in range(len(arr)):
+            min_idx = i
+            for j in range(i+1, len(arr)):
+                if arr[j] < arr[min_idx]:       # if element in subarray has smaller value then swap
+                    min_idx = j
+            arr[i], arr[min_idx] = arr[min_idx], arr[i]
+        return arr
+            
+bubble sort
+
+    def bubblesort(arr):
+        for i in range(len(arr)):
+            swapped = False
+            for j in range(len(arr) - i - 1):
+                if arr[j] > arr[j+1]:
+                    arr[j], arr[j+1] = arr[j+1], arr[j]
+                    swapped = True
+            if not swapped:
+                break
+        return arr
+        
+insertion sort
+
+    def insertionsort(arr):
+        for i in range(1, len(arr)):
+            key = arr[i]
+            j = i - 1 
+            
+            while j >= 0 and key < arr[j]:
+                arr[j+1] = arr[j] 
+                j-=1 
+            arr[j+1] = key
         return arr
     
-    pivot = len(arr) // 2
-    left = [ l for l in arr if l < pivot]       # list of entries less than pivot
-    middle = [ m for m in arr if m == pivot ]   # list of entries equal to pivot
-    right = [ r for r in arr if r > pivot]      # list of entries greater than pivot
-    
-    return quicksort(left) + middle + quicksort(right)      # recursive call to invoke the call stack
-    
-def twosum(arr,target):
-    mp = {} 
-    for i in range(len(arr)):
-        mp[arr[i]] = i      # mapping number to its index
-    
-    for i in range(len(arr)):
-        comp = target - arr[i]      # finding complement, 2+3 = 5, them there must be a 5-2 in mp if we finding twosum for 2 
-        if comp in mp:
-            return [i, mp[comp]]
-    
-    return [-1,-1]      # not found
-
-def maxsubarraysum(arr,l,r):
-    # need to find sum of subarrays starting from left, inclusive of r
-    # we implement prefix sum
-    pfx = []
-    summ = 0
-    for i in arr:
-        summ += i
-        pfx.append(summ)
-        # at every index i, we get the summ till ith element
-    
-    return (pfx[r] - pfx[l])        # this gives the exact sum in O(n) time
-
-
-
-#<----------Divide and Conquer mergesort --------------->
-def mergesort(arr):
-    if len(arr) <= 1: return arr
-    
-    mid = len(arr) // 2 
-    
-    left = mergesort(arr[:mid])
-    right = mergesort(arr[mid:])        # recursive calls to break down left and right segments till unit block of element remains
-    
-    return merger(left,right)       # will have 2^n merge calls in recursive call stack, on the way up, it will build back the sorted array 
+        '''Initial Array: [5, 2, 9, 1, 5]
         
-def merge(left,right):
-    res = []
-    i = j= 0
-    while i < len(left) and right < len(right):
-        if left[i] <= right[j]:
-            res.append(left[i])
-            i+=1 
-        else:
-            res.append(right[j])
-            j += 1 
+        Start with the 2nd element (i = 1)
+        key = 2 (current element to insert).
+        Compare 2 with 5 (the sorted subarray [5] to its left).
+        Since 2 < 5, shift 5 right → [5, 5, 9, 1, 5].
+        Insert key at the correct position → [2, 5, 9, 1, 5].
+        
+        Next element (i = 2)
+        key = 9.
+        Compare 9 with 5 (sorted subarray [2, 5]).
+        9 > 5 → no shifts needed → [2, 5, 9, 1, 5].
+        
+        Next element (i = 3)
+        key = 1.
+        Compare 1 with 9 → shift 9 right → [2, 5, 9, 9, 5].
+        Compare 1 with 5 → shift 5 right → [2, 5, 5, 9, 5].
+        Compare 1 with 2 → shift 2 right → [2, 2, 5, 9, 5].
+        Insert key → [1, 2, 5, 9, 5]
+        
+        Final element (i = 4)
+        key = 5.
+        Compare 5 with 9 → shift 9 right → [1, 2, 5, 9, 9].
+        Compare 5 with 5 (no shift, since 5 == 5).
+        Insert key → [1, 2, 5, 5, 9].'''
     
-    res.extend(left[i:])        # for leftover elements in left and right, it extends res and copies values into res 
-    res.extend(right[j:])
-    
-    return res
-        
-        
-        
-def selection_sort(arr):        # repeatedly swap smaller elements with larger elements 
-    for i in range(len(arr)):
-        min_idx = i
-        for j in range(i+1, len(arr)):
-            if arr[j] < arr[min_idx]:       # if element in subarray has smaller value then swap
-                min_idx = j
-        arr[i], arr[min_idx] = arr[min_idx], arr[i]
-    return arr
-        
+<---------- Dynamic Programming [memoization(top - down) / Tabulation(bottom - up)] --------------->
 
-def bubblesort(arr):
-    for i in range(len(arr)):
-        swapped = False
-        for j in range(len(arr) - i - 1):
-            if arr[j] > arr[j+1]:
-                arr[j], arr[j+1] = arr[j+1], arr[j]
-                swapped = True
-        if not swapped:
-            break
-    return arr
-    
-    
-def insertionsort(arr):
-    for i in range(1, len(arr)):
-        key = arr[i]
-        j = i - 1 
-        
-        while j >= 0 and key < arr[j]:
-            arr[j+1] = arr[j] 
-            j-=1 
-        arr[j+1] = key
-    return arr
+return nth fibonacci number
 
-    '''Initial Array: [5, 2, 9, 1, 5]
-    
-    Start with the 2nd element (i = 1)
-    key = 2 (current element to insert).
-    Compare 2 with 5 (the sorted subarray [5] to its left).
-    Since 2 < 5, shift 5 right → [5, 5, 9, 1, 5].
-    Insert key at the correct position → [2, 5, 9, 1, 5].
-    
-    Next element (i = 2)
-    key = 9.
-    Compare 9 with 5 (sorted subarray [2, 5]).
-    9 > 5 → no shifts needed → [2, 5, 9, 1, 5].
-    
-    Next element (i = 3)
-    key = 1.
-    Compare 1 with 9 → shift 9 right → [2, 5, 9, 9, 5].
-    Compare 1 with 5 → shift 5 right → [2, 5, 5, 9, 5].
-    Compare 1 with 2 → shift 2 right → [2, 2, 5, 9, 5].
-    Insert key → [1, 2, 5, 9, 5]
-    
-    Final element (i = 4)
-    key = 5.
-    Compare 5 with 9 → shift 9 right → [1, 2, 5, 9, 9].
-    Compare 5 with 5 (no shift, since 5 == 5).
-    Insert key → [1, 2, 5, 5, 9].'''
-
-#<---------- Dynamic Programming [memoization(top - down) / Tabulation(bottom - up)] --------------->
-    # return nth fibonacci number
-    def fibonacci(self, n: int) -> int:
-        # bottom up dp 
-        # base cases
-        if n == 0:
-            return 0
-        if n == 1 or n == 2:
-            return 1
+        def fibonacci(self, n: int) -> int:
+            # bottom up dp 
+            # base cases
+            if n == 0:
+                return 0
+            if n == 1 or n == 2:
+                return 1
 
         dp = [0]*(n+1)
         dp[0] = 0
@@ -216,7 +235,8 @@ def insertionsort(arr):
         return dp[n]
     
     
-    # climbing stairs :  can climb one or two at a time, how many steps to reach top
+climbing stairs :  can climb one or two at a time, how many steps to reach top
+
     def climbing(self, n:int) -> int:
         
         if n <= 3:
@@ -248,7 +268,7 @@ def insertionsort(arr):
         # we basically have 2 pointers, a and b that move forward and b is always 1 jump ahead.
         # no of jumps b can do would be all the  jumps it could do earlier ( given by position a) + number of jumps he can do with 2 choice
         
-    # 0/1 knapsack
+0/1 knapsack
     # we are given n items with weight[i] and value[i]
     # and maxweight as w 
     # choose items such that sum(weights[i]) < maxweight and sum(value[i]) is maximised
@@ -272,7 +292,7 @@ def insertionsort(arr):
                     
         return dp[n][w]
         
-    # space optimised 0/1 knapsack 
+space optimised 0/1 knapsack 
     
     def knapsack(w,wt,val,n):
         dp = [0]*(w+1)
@@ -299,8 +319,8 @@ def insertionsort(arr):
         
         
     
-    # Longest Common Subsequence
-    # given a string str1 and str2, return the len of longest common Subsequence
+Longest Common Subsequence
+    given a string str1 and str2, return the len of longest common Subsequence
     
     def lcs(str1, str2);
         m,n = len(str1), len(str1)
@@ -324,8 +344,8 @@ def insertionsort(arr):
                     
                     
                     
-    # coin exchange
-    # give an amount, and a set of coins, return possible combinations of coins that make up amount
+coin exchange
+    given an amount, and a set of coins, return possible combinations of coins that make up amount
     
     def coinex(coins, amount):
         dp = [float('inf')]*(amount+1)
@@ -340,7 +360,7 @@ def insertionsort(arr):
                     
                     
                 
-#<-------------------------Trees -------------------------------->
+<-------------------------Trees -------------------------------->
 
 # check if binary tree is BST 
     
