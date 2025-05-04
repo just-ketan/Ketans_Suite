@@ -1,0 +1,36 @@
+def insertionsort(arr):
+    for i in range(1, len(arr)):
+        key = arr[i]
+        j = i - 1 
+        
+        while j >= 0 and key < arr[j]:
+            arr[j+1] = arr[j] 
+            j-=1 
+        arr[j+1] = key
+    return arr
+
+    '''Initial Array: [5, 2, 9, 1, 5]
+    
+    Start with the 2nd element (i = 1)
+    key = 2 (current element to insert).
+    Compare 2 with 5 (the sorted subarray [5] to its left).
+    Since 2 < 5, shift 5 right → [5, 5, 9, 1, 5].
+    Insert key at the correct position → [2, 5, 9, 1, 5].
+    
+    Next element (i = 2)
+    key = 9.
+    Compare 9 with 5 (sorted subarray [2, 5]).
+    9 > 5 → no shifts needed → [2, 5, 9, 1, 5].
+    
+    Next element (i = 3)
+    key = 1.
+    Compare 1 with 9 → shift 9 right → [2, 5, 9, 9, 5].
+    Compare 1 with 5 → shift 5 right → [2, 5, 5, 9, 5].
+    Compare 1 with 2 → shift 2 right → [2, 2, 5, 9, 5].
+    Insert key → [1, 2, 5, 9, 5]
+    
+    Final element (i = 4)
+    key = 5.
+    Compare 5 with 9 → shift 9 right → [1, 2, 5, 9, 9].
+    Compare 5 with 5 (no shift, since 5 == 5).
+    Insert key → [1, 2, 5, 5, 9].'''
