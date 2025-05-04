@@ -1,0 +1,17 @@
+Seriallisinf a Tree basically means traversing in level order and concatenating the elements to make a string of nodes
+
+def SerialliseTree(root : TreeNode):
+  if not root:
+    return "null"    # handling empty node with "null" delimiter, can handle with delimiter of choice
+  q = deque([root])
+  res = []
+  while q:
+    node = q.popleft()
+    if node:
+      res.append(str(node.val))
+      q.append(node.left)
+      q.append(node.right)
+    if node == "null":
+      res.apped("null")
+
+  return ",".join(res)
