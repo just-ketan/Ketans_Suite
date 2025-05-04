@@ -1,0 +1,11 @@
+def twosum(arr,target):
+    mp = {} 
+    for i in range(len(arr)):
+        mp[arr[i]] = i      # mapping number to its index
+    
+    for i in range(len(arr)):
+        comp = target - arr[i]      # finding complement, 2+3 = 5, them there must be a 5-2 in mp if we finding twosum for 2 
+        if comp in mp:
+            return [i, mp[comp]]
+    
+    return [-1,-1]      # not found
