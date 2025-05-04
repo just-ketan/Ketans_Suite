@@ -1,0 +1,25 @@
+def mergesort(arr):
+    if len(arr) <= 1: return arr
+    
+    mid = len(arr) // 2 
+    
+    left = mergesort(arr[:mid])
+    right = mergesort(arr[mid:])        # recursive calls to break down left and right segments till unit block of element remains
+    
+    return merger(left,right)       # will have 2^n merge calls in recursive call stack, on the way up, it will build back the sorted array 
+        
+def merge(left,right):
+    res = []
+    i = j= 0
+    while i < len(left) and right < len(right):
+        if left[i] <= right[j]:
+            res.append(left[i])
+            i+=1 
+        else:
+            res.append(right[j])
+            j += 1 
+    
+    res.extend(left[i:])        # for leftover elements in left and right, it extends res and copies values into res 
+    res.extend(right[j:])
+    
+    return res
