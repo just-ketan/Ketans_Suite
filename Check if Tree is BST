@@ -1,0 +1,12 @@
+def is_bst(root):
+    def helper(node, left, right):
+        if not node:
+            return True # we reached the end and there are no more violations
+        if node.val <= left or node.val >= right:
+            return False    # a value can never be lesser than left bound and greater than right bound in a substree
+        
+        return helper(node.left, left, node.val) and helper(node.right, node.val, right)
+        #when we go down left, the upper bound will be the root node val    lc <= root
+        # when we go down right, the lower bound will be the root node      rc >= root
+    
+    return is_bst(root, float('-inf'), float('inf'))
