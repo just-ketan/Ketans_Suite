@@ -1,0 +1,21 @@
+Def Deseriallise(data: str) -> TreeNode:
+  if not data:
+    return None  
+  values = data.split(",")    # split data into list via comma as delimiter
+  root = TreeNode(values[0])    # make root node out of val[0]  --> null case is handled above
+  i = 0    # pointer to value list
+  q = deque([root])    # --> Q holds the ndoes currently in queue
+
+  while q:
+    node = q.popleft()    # we pop element
+    if val[i] != "null":    # if element in value[i] is not "null" then append the value as left child into q
+      node.left = TreeNode(values[i])
+      q.append(node.left)
+    i+=1    # move pointer forward
+    if val[i] != "null":    # if element in value[i] is not "null" then append the value as right child into q
+      node.right = TreeNode(values[i])
+      q.append(node.right)
+    i+=1    # move pointer forward
+
+  return root
+  
