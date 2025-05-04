@@ -1,0 +1,5 @@
+def height(node:TreeNode) -> int:
+    if not node:
+        return -1 # no children
+    
+    return 1 + max(height(node.left), height(node.right))
