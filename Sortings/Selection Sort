@@ -1,0 +1,31 @@
+def selection_sort(arr):        # repeatedly swap smaller elements with larger elements 
+    for i in range(len(arr)):
+        min_idx = i  
+        # store the min index known as current
+        for j in range(i+1, len(arr)):
+            # iterate in subarray to find any other possible minimum entry
+            # mark the min index as that j for which arr[j] < arr[min_index]
+            if arr[j] < arr[min_idx]:       # if element in subarray has smaller value then swap
+                min_idx = j
+        # swap smaller value in correct place 
+        arr[i], arr[min_idx] = arr[min_idx], arr[i]
+    return arr
+
+arr  =[12,3,1,23,4,5]
+i = 0, nums[i] = 12, min_idx = 0
+for j in [3,1,23,4,5], min_idx will get updated to min_idx = j = 2
+swap 12 <-> 1 --> arr = [1,3,12,23,4,5]
+
+i=1, min_idx = 1, nums[i] = 3
+after iterating through [12,23,4,5] we dont update j
+swap arr[i] with arr[min_idx] --> this wont change anything
+
+i=2, min_idx = 2, nums[i] = 12
+for j in [23,4,5], we find that min_idx = j = 3
+swap arr[j] <-> arr[min_idx] --> arr = [1,3,4,23,12,5]
+
+i=3, min_idx = 3, nums[i] = 23
+swap with 5
+arr = [1,3,4,5,12,23]
+
+do one more iteration, j does not gets updated. return arr
