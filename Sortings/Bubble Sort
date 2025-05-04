@@ -1,0 +1,35 @@
+def bubblesort(arr):
+    for i in range(len(arr)):
+        swapped = False
+        # for every i, we mark the boolean 'swapped' as False before going in the subarray
+        for j in range(len(arr) - i - 1):
+            # we iterate in leftover half
+            if arr[j] > arr[j+1]:
+                # comapre the consecutive elements and swap if arr[j] < arr[j+1]
+                arr[j], arr[j+1] = arr[j+1], arr[j]
+                swapped = True
+                # if swap happend, mark boolean as True
+        if not swapped:
+            # if the swap did not happen for leftover halh --> already sorted. thus we break
+            break
+    return arr
+
+
+arr = [23,34,25,3,1,2]
+
+i= 0, 
+j iterated for len(arr) - 2 times, inclusive of len(arr)-1.
+
+first iteration ->
+arr = [12,23,3,1,2,25]
+
+second iteration ->
+arr = [12,3,1,2,23,25]
+
+third iteration ->
+arr = [3,1,2,12,23,25]
+
+fourth iteration ->
+arr = [1,2,3,12,23,25]
+
+for 5 iteration, there are no swaps, thus loop breaks and returns arr.
