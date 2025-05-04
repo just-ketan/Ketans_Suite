@@ -1,0 +1,20 @@
+def knapsack(w,wt,val,n):
+    dp = [0]*(w+1)
+    # dp[i] reperesents the maximum capacity the knapsack of size i can have
+    # initally 0 as with 0 size, we can store 0 items
+    
+    for i in range(n):
+        # for each item i we decide whether we take it or not
+        # we basically chose the max of the two options
+        
+        for j in range(w, wt[i]-1, -1):
+            # we traverse the remaining in reverse to prevent reuse of same elements multiple times
+            # iterate from maxxweight till the maximum possible weight at index j
+            dp[j] = max(dp[j], (val[i] + dp[j - wt[i]]))
+            
+            # if this chose dp[j] -> we did not select current j
+            # if this chose to include the current entry
+                # we need to add the value given at this index i
+                # subtract the weight(wt[i]) from current capacity j (dp[j])
+                # remaining capacity is dp[j - wt[i]] --> we contribute this to current capacity
+    return dp[w]
