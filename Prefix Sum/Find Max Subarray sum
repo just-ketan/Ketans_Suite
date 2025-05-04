@@ -1,0 +1,11 @@
+def maxsubarraysum(arr,l,r):
+    # need to find sum of subarrays starting from left, inclusive of r
+    # we implement prefix sum
+    pfx = []
+    summ = 0
+    for i in arr:
+        summ += i
+        pfx.append(summ)
+        # at every index i, we get the summ till ith element
+    
+    return (pfx[r] - pfx[l])        # this gives the exact sum in O(n) time
