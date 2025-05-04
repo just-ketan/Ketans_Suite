@@ -1,0 +1,47 @@
+<---------Recursion ------->
+def coinex(coins, amount):
+  def dp(comp):
+    if comp < 0: return float('inf')    # base case --> unreachable amount
+    if comp == 0: return 0      # if complement finally turns 0, amount can eb reallised from coins
+    mincoins = float('inf')     # let the mincoins be infinity
+    for coin in coins:
+      res = dp(comp - coin)    # for each coin, we make a recursive call to see if the complement is reallised using coins
+      if res!- float('inf'):   # if res does not hit base case of comp < 0, its valid
+        mincoins = min(mincoins, res+1)    # update min to res+1 --> inclusive of current coin
+    return mincoins    # return mincoins
+
+  res = dp(amount)
+  return res if res!=float('inf') else -1
+
+
+<---------------memoization ---------->
+def coinex(coins, amount):
+  memo = {0:0}  
+  def dp(comp):
+    if comp in memo:
+      return memo[comp]
+    if comp < 0:  return float('inf')
+    mincoins = float('inf')
+    for coin in coins:
+      res = dp(comp - coin)
+      if res!= float('inf'):
+        mincoins = min(mincoins, res+1)
+    memo[comp] = mincoins
+    return mincoins
+  
+  res = dp(amount)
+  return res if res != float('inf') else -1
+
+
+<-------------Tabulation ----------------->
+def coinex(coins, amount):
+    dp = [float('inf')]*(amount+1)
+    # initiallise the dp table with amount+1 entries of "-inf"
+    # dp[i] represents the min coins required to make a sum of i from given coins
+    dp[0] = 0   # 0 amount can be reallised by taking 0 coins from coins list
+    
+    for coin in coins:
+        for i in range(coin, amount+1):     # from current coin to max value possible, inclusive of amount
+            dp[i] = min(dp[i], dp[i - coin] + 1)
+    
+    return dp[amount] if dp[amount] != float('inf') else -1 
