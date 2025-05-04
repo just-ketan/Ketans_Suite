@@ -1,0 +1,38 @@
+def reverse_link_list():
+    # to reverse a link list
+    # 1(prev) -> 2(curr) -> 3(next) -> None
+    # we will swap the links one at a time such that
+    # 1 <- 2 -> 3
+    # 1 <- 2 <- 3
+    
+    prev = None
+    curr = head
+    while curr:
+        nxt = curr.next
+        
+        # main reversing logic
+        curr.next = prev
+        prev = curr
+        curr = nxt
+    return prev
+    
+    # 1(prev) -> 2(curr) -> 3(next) -> None
+    # None (prev)
+    # curr = head = 1 
+    # nxt = curr.next   =>      nxt = 2
+    # curr.next = prev  =>      1 -> None
+    # prev = curr       => prev = 1 
+    # curr = nxt        => curr = 2
+        
+    # nxt = curr.next   =>      nxt = 3
+    # curr.next = prev  =>      2 -> 1 -> None
+    # prev = curr       => prev = 2 
+    # curr = nxt        => curr = 3
+    
+    # nxt = curr.next   =>      nxt = None
+    # curr.next = prev  =>      3 -> 2 -> 1 -> None
+    # prev = curr       => prev = 3 
+    # curr = nxt        => curr = None      --> while loop breaks
+    
+    # return prev -> returns the new head, that is 3
+    # 3 -> 2 -> 1 is returned
