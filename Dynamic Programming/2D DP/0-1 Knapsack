@@ -1,1 +1,28 @@
 
+def zerooneknapsack(w, wt, val, n):
+    # we need a 2D dp table where each index i has an index j that represents max of sum(values) for that index i 
+    # w is maxweight
+    # wt is an array of weights of each index i
+    # val is the value/points at index i
+    # n is the number of items in knapsack
+
+
+    dp[][] = [[0 for _ in range(w+1)] for _ in range(n+1)]
+    # we always create n+1 size dp table to account for base case of 0
+    
+    # base cases
+    # dp[0][j] -> represents no items --> 0
+    # dp[i][0] --> represents no capacity --> 0
+    
+    for i in range(1, n+1):         # from 1 to n inclusive of n 
+        for j in range(1, w+1):     # from 1 to w inclusive of w
+            if wt[i-j] > j:
+                # cant take this item
+                dp[i][j] = dp[i-1][j]    # move forward
+            else:
+                dp[i][j]  = max(dp[i-1][j], (val[i-1] + dp[i-1][j - wt[i-1]] ))
+                # we think of taking the value at dp[i][j],
+                # we need to reduce the weight from current value and add the value/points from index i
+                # take the max of them
+                
+    return dp[n][w]
