@@ -1,0 +1,10 @@
+def quicksort(arr):
+    if len(arr) <= 1:
+        return arr
+    
+    pivot = len(arr) // 2
+    left = [ l for l in arr if l < pivot]       # list of entries less than pivot
+    middle = [ m for m in arr if m == pivot ]   # list of entries equal to pivot
+    right = [ r for r in arr if r > pivot]      # list of entries greater than pivot
+    
+    return quicksort(left) + middle + quicksort(right)      # recursive call to invoke the call stack
