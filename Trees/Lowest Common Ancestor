@@ -1,0 +1,26 @@
+def LowestCommonAncestor(node: TreeNode, node1 : TreeNode, node2: TreeNode) -> TreeNode:
+  while node:
+    if node1.val < node.val and node2.val < node.val:
+      #both lie to left of this node
+      node = node.left
+    if node1.val > node.val and node2.val > node.val:
+      # both lie to the right of current node
+      node = node.right
+    else:
+      return node
+
+
+
+For Generic Trees
+
+def LowestCommonAncester(node: TreeNode, node1: TreeNode, node2: TreeNode):
+  if not node or node1 == node or node2 == node:
+    return node
+
+  left = LowestCommonAncestor(node.left,node1,node2)
+  right = LowestCommonAncestor(node.right,node1,node2)
+
+  if left and right:
+    return node
+
+  return left or right    # whichever is not None
