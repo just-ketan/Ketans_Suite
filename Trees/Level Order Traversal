@@ -1,0 +1,15 @@
+def LevelOrderTraversal(root : TreeNode) -> List[List[int]]:
+  q = deque([root])
+  res = []
+  while q:
+    qlen = len(q)  @ will pop elements for range of current q
+    curr = []
+    for i in range(qlen):
+      node = q.popleft()    # pop anode
+      if node:
+        curr.append(node)
+        q.append(node.left)    # append the left and right child of node if node, into q
+        q.append(node.right)
+    if curr:  
+      res.append(curr)    # if curr is not None, apend to res
+  return res
