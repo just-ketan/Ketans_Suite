@@ -1,0 +1,36 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <math.h>
+#include <limits.h>
+
+
+// binary search
+
+int binary_search(int arr[], int left, int right, int key){
+    if(right >= left){
+        int mid = (left+right)/2;
+        if(arr[mid] == key){
+            return mid;
+        }
+        if(arr[mid] > key){
+            return binary_search(arr,left, mid-1, key);
+        }
+        return binary_search(arr,mid+1, right, key);
+        }
+    return -1;
+}
+
+int main(){
+    int arr[] = { 11, 14, 19, 23, 40 };
+    int n = sizeof(arr) / sizeof(arr[0]);
+    int x = 40;
+    int result = binary_search(arr, 0, n - 1, x);
+    if (result == -1) {
+        printf("Element is not present in array");
+    }
+    else {
+        printf("Element is present at index %d", result);
+    }
+    return 0;
+}
