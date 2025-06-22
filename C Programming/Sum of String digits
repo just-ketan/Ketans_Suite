@@ -1,0 +1,24 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <math.h>
+#include <limits.h>
+
+
+// count sum of numbers in a string
+
+int main(){
+    char s[50];
+    printf("Enter the string:");
+    scanf("%s",s); // we dont use & symbol here
+    
+    int res=0;
+    for(int i=0; s[i]!='\0'; i++){
+        int item = s[i] - 48;
+        if( item <= 9){
+            res += item;
+        }
+    }
+    printf("%d", res);
+    return 0;
+}
