@@ -1,0 +1,26 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <math.h>
+// find minimum and maximum in an std::array<, N> ;
+
+int main(){
+    int minn=99999, maxx=-1;
+    int n;
+    printf("Etner size of array");
+    scanf("%d",&n);
+    
+    int arr[n];
+    for(int i=0; i<n; i++){
+        printf("Enter %dth Element:",i+1);
+        scanf("%d",&arr[i]);
+    }
+    
+    for(int i=0; i < sizeof(arr)/sizeof(arr[0]); i++){
+        if(arr[i] < minn){ minn = arr[i]; }
+        if(arr[i] > maxx){ maxx = arr[i]; }
+    }
+    
+    printf("Maximum: %d and Minimum: %d", maxx,minn);
+    return 0;
+}
