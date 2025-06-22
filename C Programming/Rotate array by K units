@@ -1,0 +1,42 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <math.h>
+// cyclic rotate array by k units
+
+int main(){
+    int n;
+    printf("Enter size of array");
+    scanf("%d",&n);
+    
+    int arr[n];
+    for(int i=0; i<n; i++){
+        printf("Enter %dth Element:",i+1);
+        scanf("%d",&arr[i]);
+    }
+    int k;
+    printf("Enter rotations:");
+    scanf("%d",&k);
+    
+    int len = n;
+    k = k%len;  // optimising to remove uncessesary rotations
+    
+    // we need to get the last index, rotate all elements forward and then plug the last element at index 0
+    for(int rotations=0; rotations<k; rotations++){
+        int temp = arr[len-1];
+        for(int i=len-1; i>=0; i--){
+            arr[i] = arr[i-1];
+        }
+        arr[0] = temp;
+    }
+    
+    for( int i=0; i<len; i++){
+        printf("%d ", arr[i]);
+    }
+}
+
+// 12 23 34 45 56
+// after 3 rotations
+// 56 12 23 34 45 
+// 45 56 12 23 34 
+// 3 4 5 1 2 
