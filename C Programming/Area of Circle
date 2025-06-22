@@ -1,0 +1,16 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <math.h>
+
+// find area if a circle
+#define pi 3.142
+
+int main(){
+    double r;
+    scanf("%lf",&r);
+    // area = pi*r^2
+    printf("Area of circle:%lf",pi*r*r);
+    return 0;
+    
+}
