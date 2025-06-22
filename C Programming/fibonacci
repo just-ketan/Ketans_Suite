@@ -1,0 +1,22 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <math.h>
+#include <limits.h>
+
+
+// fibonacci
+
+int fib(int x){
+    if( x <= 1){
+        return x;
+    }
+    return fib(x-1) + fib(x-2);
+}
+
+int main(){
+    int num;
+    scanf("%d",&num);
+    printf("fibonacci:%d",fib(num));
+    return 0;
+}
