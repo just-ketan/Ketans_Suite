@@ -1,0 +1,15 @@
+#include <stdio.h>
+#include <stdbool.h>
+#include <math.h>
+
+int main()
+{
+// swap 2 numbers without using extra space 
+    int a,b;
+    scanf("%d%d",&a,&b);    // 10,20
+    a = a+b;    // a holds  30
+    b = a-b;    // b holds 10
+    a = a-b;    // a holds 20
+    printf("1:%d\t2:%d",a,b);
+    return 0;
+}
