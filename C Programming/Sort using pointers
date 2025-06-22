@@ -1,0 +1,35 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <math.h>
+#include <limits.h>
+
+
+// sort arrays using pointers
+
+void sort(int n, int* ptr){
+    for(int i=0; i<n; i++){
+        for(int j=i+1; j<n; j++){
+            if(*(ptr+j) < *(ptr+i)){
+                int temp = *(ptr+i);
+                *(ptr+i) = *(ptr+j);
+                *(ptr+j) = temp;
+            }
+        }
+    }
+    for(int i=0; i<n; i++){
+        printf("%d ",*(ptr+i));
+    }
+}
+
+int main(){
+    int num;
+    scanf("%d", &num);
+    int arr[num];
+    for(int i=0; i<num; i++){
+        scanf("%d",&arr[i]);
+    }
+    
+    sort(num, arr);
+    return 0;
+}
