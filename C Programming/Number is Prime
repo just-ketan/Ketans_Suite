@@ -1,0 +1,21 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+int main()
+{
+// find number is prime 
+    int num;
+    scanf("%d",&num);
+    if(num <= 1){
+        printf("Number:%d is not Prime\n", num);
+        return 0;
+    }
+    for(int i=2; i<num/2; i++){
+        if(num%i == 0){
+            printf("Number:%d is not Prime\n", num);
+            return 0;
+        }
+    }
+    printf("Number:%d is Prime", num);
+    return 0;
+}
