@@ -1,0 +1,55 @@
+#include <stdio.h>
+#include <stdbool.h>
+#include <math.h>
+
+
+// find a number is armstrong number or not
+// armstrong num is digits raised to the power of order and summed together gives the same number
+// 153: 1³ + 5³ + 3³ = 1 + 125 + 27 = 153
+
+int order(int x){
+    int o=0;
+    while(x!=0){
+        o++;
+        x = x/10;
+    }
+    return o;
+}
+
+int raise_digit(int d, int p){
+    if(p==0){
+        return 1; // anything power 0 is 1
+    }
+    if(p%2==0){
+        return raise_digit(d,p/2)*raise_digit(d,p/2);
+        // we are basically breaking powers such that the recursive stack is small
+    }
+    return d*raise_digit(d,p/2)*raise_digit(d,p/2);
+    // otherwise we add additional factor of d to handle odd nature of powers
+}
+
+bool armstring(int x){
+    int ord = order(x);
+    int temp = x, sum=0;
+    while(temp){
+        int d = temp%10;
+        sum+=raise_digit(d,ord);
+        temp = temp/10;
+    }
+    
+    if(sum==x){
+        return true;
+    }else{ return false; }
+    
+}
+int main(){
+    int num;
+    printf("Enter the number:");
+    scanf("%d",&num);
+    if(armstring(num)){
+        printf("Entered number is an Armstrong Number\n");
+    }else{
+        printf("Entered number is not an Armstrong Number\n");
+    }
+    return 0;
+}
