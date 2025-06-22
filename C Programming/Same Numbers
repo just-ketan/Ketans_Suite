@@ -1,0 +1,17 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <math.h>
+
+// check if numbers are equal
+
+int main(){
+    int a,b;
+    scanf("%d%d",&a,&b);
+    if(a^b){        // bitwise XOR gives 0(false) for different numbers and 1(true) for same bitpositions
+        printf("Numbers are not equal to each other");
+    }else{
+        printf("Numbers are same");
+    }
+    return 0;
+}
