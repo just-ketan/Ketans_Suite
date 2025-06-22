@@ -1,0 +1,43 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <math.h>
+
+
+// find roots of Quoadratic eqn ax^2 + bx + c = 0
+
+void find_roots(int a, int b, int c){
+    if(a==0){
+        // not quadratic but linear
+        printf("Not a Valid Quadratic Equation\n");
+    }
+    
+    int diff = (b*b) - (4*a*c);
+    // diff is b^2 - 4ac
+    double sdiff = sqrt(abs(diff));
+    
+    if(sdiff>0){
+        printf("Roots are real and unequal\n");
+        printf("%f\t%f\n",(double)(-b+sdiff)/(2*a),(double)(-b-sdiff)/(2*a));
+        // [-b +- sqrt(b^2 -4ac)] / 2a
+    }
+    else if(sdiff = 0){
+        printf("Roots are real and equal\n");
+        printf("%f", -(double)b/(2*a));
+    }else{
+        // roots are complex, a+ib
+        printf("Roots are complex\n");
+        printf("%f+i%f\t%f-i%f",-(double)b / (2 * a), sdiff/ (2 * a), -(double)b / (2 * a), sdiff / (2 * a));
+        // roots = alpha + i*beta
+        // alpha = -b / 2a
+        // beta = sqrt(b^2 - 4ac)/ 2a
+    }
+}
+
+int main(){
+    int a,b,c;
+    printf("Enter the coefficients of Quadratic Equation\n");
+    scanf("%d%d%d",&a,&b,&c);
+    find_roots(a,b,c);
+    return 0;
+}
