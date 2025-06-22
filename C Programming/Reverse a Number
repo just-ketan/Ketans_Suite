@@ -6,12 +6,24 @@
 // reverse a number
 
 int main(){
-    int num,rev=0;
+    int num;
     scanf("%d",&num);
+    printf("Reverse Number Iterative : %d",reverse_iter(num));
+    printf("Reverse Number Recursive : %d",reverse_recur(num));
+    return 0;
+}
+
+int reverse_recur( int n, int ans){
+    if(n==0){ return ans; }
+    ans = ans*10 + n%10;
+    return reverse(n/10, ans);
+}
+
+int reverse_iter(int num){
+    int rev = 0;
     while(num!=0){
         rev = rev*10 + num%10;
         num = num/10;
     }
-    printf("Number : %d",rev);
-    return 0;
+    return rev
 }
