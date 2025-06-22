@@ -1,0 +1,37 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <math.h>
+#include <limits.h>
+
+
+// add two complex numbers
+
+// complex number are of form a+ib 
+// we need two attributes a and b for one number
+
+typedef struct complexNumber{
+    int real;
+    int imag;
+} complex;
+
+complex add(complex a, complex b){
+    complex res;
+    res.real = a.real + b.real;
+    res.imag = a.imag + b.imag;
+    
+    return res;
+}
+
+int main(){
+    complex a,b,res;
+    a.real = 4;
+    a.imag = 5;
+    b.real = 6;
+    b.imag = 7;
+    printf("Number 1: %d+i%d", a.real, a.imag);
+    printf("Number 2: %d+i%d", b.real, b.imag);
+    
+    res = add(a,b);
+    printf("Result: %d+i%d", res.real, res.imag);
+}
