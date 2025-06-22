@@ -1,0 +1,14 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <math.h>
+
+// find min/max among two numbers
+
+int main(){
+    int a,b;
+    scanf("%d%d",&a,&b);
+    printf("Maximum:%d\t",((a+b)+abs(a-b))/2);
+    printf("Minimum:%d",((a+b)-abs(a-b))/2);
+    return 0;
+}
