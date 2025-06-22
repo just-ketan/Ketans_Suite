@@ -1,0 +1,31 @@
+#include <stdio.h>
+#include <stdbool.h>
+#include <math.h>
+
+
+int fact_iterative(int x){
+    unsigned long long int res = 1;
+    for(int i=1; i<=x; i++){
+        res=res*i;
+    }
+    printf("Factorial of %d in iterative method is %lld\n",x,res);
+}
+
+unsigned long long fact_recursive(int x){
+    if(x==0){
+        return 1;
+    }
+    return x*fact_recursive(x - 1);
+}
+
+
+int main()
+{
+// Factorial
+    int num;
+    printf("Enter number");
+    scanf("%d",&num);
+    fact_iterative(num);
+    printf("Factorial of %d in recursive method is:%lld",num,fact_recursive(num));
+    return 0;
+}
