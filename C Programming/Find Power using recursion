@@ -1,0 +1,23 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <math.h>
+#include <limits.h>
+
+
+// find power using recursion
+
+
+int power(int b, int p){
+    if(p==0){
+        return 1;
+    }
+    return power(b,p-1)*b;
+}
+
+int main(){
+    int base, expo;
+    scanf("%d%d",&base, &expo);
+    printf("%d",power(base, expo));
+    return 0;
+}
