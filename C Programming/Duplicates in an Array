@@ -1,0 +1,51 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <math.h>
+
+// find repeating elements
+void Sort(int* arr, int n){
+    for(int i=0; i<n-1; i++){
+        for( int j=0; j<n-i-1; j++){
+            if(arr[j] > arr[j+1]){
+                int temp = arr[j];
+                arr[j] = arr[j+1];
+                arr[j+1] = temp;
+            }
+        }
+    }
+}
+
+void findrepeating(int* arr, int n){
+    bool flag = false;
+    for(int i=0; i<n-1; i++){
+        if(i>0 && arr[i] == arr[i-1]){
+            continue;
+            // if this element is same as before, skip duplicate
+        }
+        if(arr[i] == arr[i+1]){
+            printf("%d ", arr[i]);
+            flag = true;
+        }
+    }
+    if(!flag){
+        printf("No repeating characters");
+    }
+    printf("\n");
+}
+
+int main(){
+    int n;
+    printf("enter size");
+    scanf("%d",&n);
+    int arr[n];
+    for(int i=0; i<n; i++){
+        printf("Enter %d element",i+1);
+        scanf("%d",&arr[i]);
+    }
+    Sort(arr, n);
+    findrepeating(arr, n);
+    return 0;
+}
+    // to find repeating characters
+    
