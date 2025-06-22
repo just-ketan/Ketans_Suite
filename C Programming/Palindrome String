@@ -1,0 +1,35 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <math.h>
+#include <limits.h>
+
+
+// check string is palindrom
+
+int main(){
+    char s[50];
+    printf("Enter the string:");
+    scanf("%s",s); // we dont use & symbol here
+    
+    int len=0;
+    for(int i=0; s[i] != '\0'; i++){
+        len++;
+    }
+    
+    // now we have the length of string
+    // we can iteratively check for palindrome
+    bool flag = true;
+    int i=0,j=len-1;
+    for(; i<j; i++,j--){
+        if(s[i] != s[j]){
+            flag = false;
+        }
+    }
+    if(flag){
+        printf("palindrome");
+    }else{
+        printf("Not palindrome");
+    }
+    return 0;
+}
