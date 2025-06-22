@@ -1,0 +1,26 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <math.h>
+#include <limits.h>
+
+
+// reverse string using recursion
+
+void reverse(char* ch){
+    if(*ch){
+        reverse(ch+1);
+        // we are essentially going down the string untill null pointer is reached
+        // now that we are at numm pointer, the recursive call stack starts reverse execution
+        // we can declare here to print the character and it would build the string back up in Reverse
+        printf("%c",*ch);
+    }
+}
+
+int main(){
+    char str[100];
+    scanf("%s", str);
+    
+    reverse(str);
+    return 0;
+}
