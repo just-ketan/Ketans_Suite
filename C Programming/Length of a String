@@ -1,0 +1,22 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <math.h>
+#include <limits.h>
+
+
+// calculate length of string
+
+int main(){
+    char s[50];
+    printf("Enter the string:");
+    scanf("%s",s); // we dont use & symbol here
+    
+    int len=0;
+    for(int i=0; s[i] != '\0'; i++){
+        len++;
+    }
+    
+    printf("Length: %d", len);
+    return 0;
+}
