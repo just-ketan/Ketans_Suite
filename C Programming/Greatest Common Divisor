@@ -1,0 +1,26 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <math.h>
+
+// find GCD of two numbers
+
+
+int gcd(int a, int b){
+    int res = (a<b)?a:b;
+    while(res > 0){
+        if(a%res==0 && b%res==0){
+            // we found the Greatest common divisor that divides both
+            break;
+        }
+        res--;
+    }
+    return res;
+}
+    
+int main(){
+    int a,b;
+    scanf("%d%d",&a,&b);
+    printf("GCD is:%d",gcd(a,b));
+    return 0;
+}
