@@ -1,0 +1,25 @@
+#include <stdio.h>
+#include <stdbool.h>
+#include <math.h>
+
+int main()
+{
+// convert binary to decimal
+// observe the bit position from LSB, if 1 add 2^i to result
+    int bin,dec;
+    printf("Enter binary number:");
+    scanf("%d",&bin);
+    
+    dec = 0; // initiallisation needed to bypass garbage value allocation
+    int i = 0;
+    while(bin!=0){
+        int digit = bin%10;
+        if(digit == 1){
+            dec = dec + pow(2,i);
+        }
+        i++;
+        bin = bin/10;
+    }
+    printf("Decimal number is: %d", dec);
+    return 0;
+}   
