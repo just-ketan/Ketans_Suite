@@ -1,0 +1,211 @@
+1. Concept & Implementation (Linear Array):
+#define MAX_SIZE 100
+
+int queue_arr[MAX_SIZE];
+int front = -1, rear = -1;
+
+void enqueue_linear(int value) {
+    if (rear == MAX_SIZE - 1) {
+        printf("Queue Overflow!\n");
+        return;
+    }
+    if (front == -1) { // First element
+        front = 0;
+    }
+    queue_arr[++rear] = value;
+}
+
+int dequeue_linear() {
+    if (front == -1 || front > rear) {
+        printf("Queue Underflow!\n");
+        return -1;
+    }
+    int data = queue_arr[front++];
+    if (front > rear) { // Reset queue if empty
+        front = -1;
+        rear = -1;
+    }
+    return data;
+}
+
+int peek_linear() {
+    if (front == -1 || front > rear) {
+        printf("Queue is Empty!\n");
+        return -1;
+    }
+    return queue_arr[front];
+}
+
+bool isEmpty_linear() {
+    return front == -1 || front > rear;
+}
+
+bool isFull_linear() {
+    return rear == MAX_SIZE - 1;
+}
+
+---------------------------------------------------------------------------\
+
+2. Circular Queue (Array):
+#define MAX_SIZE_CQ 5 // Example size
+
+int circular_queue[MAX_SIZE_CQ];
+int front_cq = -1, rear_cq = -1;
+
+void enqueue_cq(int value) {
+    if ((rear_cq + 1) % MAX_SIZE_CQ == front_cq) {
+        printf("Circular Queue Overflow!\n");
+        return;
+    }
+    if (front_cq == -1) { // First element
+        front_cq = 0;
+    }
+    rear_cq = (rear_cq + 1) % MAX_SIZE_CQ;
+    circular_queue[rear_cq] = value;
+}
+
+int dequeue_cq() {
+    if (front_cq == -1) {
+        printf("Circular Queue Underflow!\n");
+        return -1;
+    }
+    int data = circular_queue[front_cq];
+    if (front_cq == rear_cq) { // Last element being dequeued
+        front_cq = -1;
+        rear_cq = -1;
+    } else {
+        front_cq = (front_cq + 1) % MAX_SIZE_CQ;
+    }
+    return data;
+}
+
+bool isEmpty_cq() {
+    return front_cq == -1;
+}
+
+bool isFull_cq() {
+    return (rear_cq + 1) % MAX_SIZE_CQ == front_cq;
+}
+
+
+---------------------------------------------------------------------------\
+
+3. Priority Queue (Conceptual):
+"A priority queue is a special type of queue where each element has a priority. Elements are dequeued based on their priority, usually highest priority first. If priorities are equal, then elements are dequeued according to their order in the queue."
+Commonly implemented using heaps (binary heaps specifically).
+
+---------------------------------------------------------------------------\
+
+4. Queue using Stacks (Conceptual Snippet):
+(Requires two stacks, implemented using array or linked list).
+// Using two stacks, s1 and s2 (assume array-based stacks from Stack section)
+// Queue front is represented by the top of s2.
+// Queue rear is represented by elements pushed to s1.
+
+// Enqueue operation (efficient)
+void enqueue_using_stacks(int data) {
+    push_array(data); // Push to s1
+}
+
+// Dequeue operation (costly, moves elements)
+int dequeue_using_stacks() {
+    if (isEmpty_array()) { // s1 is the primary input stack
+        printf("Queue is empty!\n");
+        return -1;
+    }
+    if (top_s2 == -1) { // If s2 is empty, transfer from s1 to s2
+        while (!isEmpty_array()) { // s1 functions as top
+            push_to_s2(pop_array()); // Assuming s2 has its own push
+        }
+    }
+    if (top_s2 == -1) { // After transfer, if s2 is still empty, original queue was empty
+        printf("Queue is empty!\n"); // Should ideally not happen if isEmpty_array check above is right
+        return -1;
+    }
+    return pop_from_s2(); // Assuming s2 has its own pop
+}
+
+---------------------------------------------------------------------------\
+
+5. BFS (Breadth-First Search) on a Graph/Tree (Conceptual):
+"BFS uses a queue to explore nodes level by level. It starts from a source node, adds it to the queue, and then repeatedly dequeues a node, visits it, and enqueues all its unvisited neighbors."
+
+---------------------------------------------------------------------------\
+
+6. Josephus Problem (Conceptual):
+"In the Josephus problem, a group of people are standing in a circle, and every k-th person is eliminated until only one remains. A circular linked list or a queue can be used to simulate this process."
+
+---------------------------------------------------------------------------\
+
+7. Producer-Consumer Problem (Conceptual):
+"Queues are used as a buffer between producers (who add items to the queue) and consumers (who remove items from the queue). This decouples their activities and handles speed mismatches, often with synchronization mechanisms (mutexes, semaphores)."
+
+---------------------------------------------------------------------------\
+
+8. Deque (Double-Ended Queue) - Conceptual:
+"A Deque is a generalization of a queue where elements can be added or removed from either the front or the back. Operations: addFront, addRear, removeFront, removeRear, getFront, getRear, isEmpty, isFull."
+
+
+---------------------------------------------------------------------------\
+
+9. Interleave the First Half of a Queue with the Second Half:
+(Requires an auxiliary stack).
+// Assumes queue operations for queue_arr (from snippet 1)
+// Function assumes queue_arr, front, rear are accessible
+void interleaveQueueHalves() {
+    if (isEmpty_linear()) return;
+
+    int size = rear - front + 1;
+    if (size % 2 != 0) { // For odd size, can't evenly interleave halves
+        printf("Queue size is odd, cannot interleave halves.\n");
+        return;
+    }
+
+    int half_size = size / 2;
+    top = -1; // Reset stack for use
+
+    // 1. Enqueue first half into stack
+    for (int i = 0; i < half_size; i++) {
+        push_array(dequeue_linear());
+    }
+
+    // 2. Enqueue stack contents back to queue
+    while (!isEmpty_array()) {
+        enqueue_linear(pop_array());
+    }
+
+    // 3. Dequeue first half (now second half of original) and enqueue back
+    for (int i = 0; i < half_size; i++) {
+        enqueue_linear(dequeue_linear());
+    }
+
+    // 4. Enqueue first half again into stack
+    for (int i = 0; i < half_size; i++) {
+        push_array(dequeue_linear());
+    }
+
+    // 5. Interleave: pop from stack, then dequeue from queue
+    while (!isEmpty_array()) {
+        enqueue_linear(pop_array());
+        enqueue_linear(dequeue_linear());
+    }
+}
+
+---------------------------------------------------------------------------\
+
+10. Implement a Simple Task Scheduler:
+// Using queue operations from snippet 1 or 2
+void addTask(int taskId) {
+    enqueue_linear(taskId); // Or enqueue_cq
+    printf("Task %d added to queue.\n", taskId);
+}
+
+void executeNextTask() {
+    if (isEmpty_linear()) { // Or isEmpty_cq
+        printf("No tasks in queue.\n");
+        return;
+    }
+    int taskId = dequeue_linear(); // Or dequeue_cq
+    printf("Executing Task %d...\n", taskId);
+    // Simulate task execution
+}
