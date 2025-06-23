@@ -1,0 +1,234 @@
+1. Concept & Implementation (Array):
+#define MAX_SIZE 100
+
+int stack[MAX_SIZE];
+int top = -1; // Indicates empty stack
+
+void push_array(int value) {
+    if (top >= MAX_SIZE - 1) {
+        printf("Stack Overflow!\n");
+        return;
+    }
+    stack[++top] = value;
+}
+
+int pop_array() {
+    if (top < 0) {
+        printf("Stack Underflow!\n");
+        return -1; // Or some error indicator
+    }
+    return stack[top--];
+}
+
+int peek_array() {
+    if (top < 0) {
+        printf("Stack is Empty!\n");
+        return -1;
+    }
+    return stack[top];
+}
+
+bool isEmpty_array() {
+    return top == -1;
+}
+
+bool isFull_array() {
+    return top == MAX_SIZE - 1;
+}
+
+
+------------------------------------------------------------------------------------------------------------
+
+
+2. Dynamic Stack (using Linked List):
+// Using the 'Node' struct defined in General Setup
+Node* top_ll = NULL;
+
+void push_ll(int value) {
+    Node* newNode = createNode(value);
+    newNode->next = top_ll;
+    top_ll = newNode;
+}
+
+int pop_ll() {
+    if (top_ll == NULL) {
+        printf("Stack Underflow (Linked List)!\n");
+        return -1;
+    }
+    Node* temp = top_ll;
+    int data = temp->data;
+    top_ll = top_ll->next;
+    free(temp);
+    return data;
+}
+
+bool isEmpty_ll() {
+    return top_ll == NULL;
+}
+
+
+------------------------------------------------------------------------------------------------------------
+
+
+3. Parenthesis Checker:
+// Requires push_array, pop_array, isEmpty_array from snippet 1
+bool areParenthesesBalanced(const char* exp) {
+    top = -1; // Reset stack top
+    for (int i = 0; exp[i] != '\0'; i++) {
+        char ch = exp[i];
+        if (ch == '(' || ch == '[' || ch == '{') {
+            push_array(ch);
+        } else if (ch == ')' || ch == ']' || ch == '}') {
+            if (isEmpty_array()) return false;
+            char pop_ch = pop_array();
+            if ((ch == ')' && pop_ch != '(') ||
+                (ch == ']' && pop_ch != '[') ||
+                (ch == '}' && pop_ch != '{')) {
+                return false;
+            }
+        }
+    }
+    return isEmpty_array();
+}
+
+
+------------------------------------------------------------------------------------------------------------
+
+
+4. Reverse a String using Stack:
+// Requires push_array, pop_array, isEmpty_array
+void reverseStringUsingStack(char* str) {
+    top = -1; // Reset stack
+    for (int i = 0; str[i] != '\0'; i++) {
+        push_array(str[i]);
+    }
+    for (int i = 0; !isEmpty_array(); i++) {
+        str[i] = (char)pop_array();
+    }
+}
+
+
+------------------------------------------------------------------------------------------------------------
+
+
+5. Infix to Postfix Conversion (Simplified, limited operators):
+(This is complex, core logic only. Requires operator precedence rules).
+// int precedence(char op) { ... } // Helper for operator precedence
+// bool isOperator(char ch) { ... }
+// bool isOperand(char ch) { ... }
+
+// Assume global stack char_stack and char_top
+// For simplicity, ignores error handling and assumes valid infix
+void infixToPostfix(char* infix, char* postfix) {
+    int i, j = 0;
+    top = -1; // Reset stack
+
+    for (i = 0; infix[i] != '\0'; i++) {
+        char ch = infix[i];
+        if (isOperand(ch)) {
+            postfix[j++] = ch;
+        } else if (ch == '(') {
+            push_array(ch);
+        } else if (ch == ')') {
+            while (!isEmpty_array() && (char)peek_array() != '(') {
+                postfix[j++] = (char)pop_array();
+            }
+            if (!isEmpty_array() && (char)peek_array() == '(') {
+                pop_array(); // Pop '('
+            }
+        } else if (isOperator(ch)) {
+            while (!isEmpty_array() && precedence(ch) <= precedence((char)peek_array())) {
+                postfix[j++] = (char)pop_array();
+            }
+            push_array(ch);
+        }
+    }
+    while (!isEmpty_array()) {
+        postfix[j++] = (char)pop_array();
+    }
+    postfix[j] = '\0';
+}
+
+------------------------------------------------------------------------------------------------------------
+
+
+6. Postfix Evaluation:
+// Requires push_array, pop_array, isEmpty_array
+int evaluatePostfix(char* exp) {
+    top = -1; // Reset stack
+    for (int i = 0; exp[i] != '\0'; i++) {
+        char ch = exp[i];
+        if (isdigit(ch)) {
+            push_array(ch - '0'); // Convert char digit to int
+        } else {
+            int val2 = pop_array();
+            int val1 = pop_array();
+            switch (ch) {
+                case '+': push_array(val1 + val2); break;
+                case '-': push_array(val1 - val2); break;
+                case '*': push_array(val1 * val2); break;
+                case '/': push_array(val1 / val2); break;
+            }
+        }
+    }
+    return pop_array();
+}
+
+
+------------------------------------------------------------------------------------------------------------
+
+
+7. Largest Rectangular Area in Histogram (Conceptual Snippet):
+This is a more advanced problem, often solved using a stack to keep track of increasing heights.
+// int largestRectangleArea(int* heights, int n) {
+//     // Implements Monotonic Stack logic
+//     // Iterate through heights, maintain a stack of indices of bars in increasing order.
+//     // When a smaller bar is encountered, pop from stack and calculate area for popped bars.
+//     // Push current bar onto stack. After loop, clear remaining stack.
+// }
+
+
+------------------------------------------------------------------------------------------------------------
+
+
+8. Next Greater Element:
+// Requires push_array, pop_array, isEmpty_array
+// Modifies the input array to store next greater elements.
+void findNextGreaterElement(int arr[], int n) {
+    int result[n];
+    top = -1; // Reset stack
+    for (int i = n - 1; i >= 0; i--) {
+        while (!isEmpty_array() && peek_array() <= arr[i]) {
+            pop_array();
+        }
+        result[i] = isEmpty_array() ? -1 : peek_array();
+        push_array(arr[i]);
+    }
+    printf("Next Greater Elements: ");
+    for(int i=0; i<n; i++) {
+        printf("%d ", result[i]);
+    }
+    printf("\n");
+}
+
+------------------------------------------------------------------------------------------------------------
+
+9. Stack using Queues (Conceptual):
+(Requires two queues, either array-based or linked-list based. Common approaches: push operation is O(N) or pop operation is O(N)).
+// Approach 1: Make push operation costly
+// push(x): Enqueue x to Q1. Move all elements from Q2 to Q1. Swap Q1 and Q2.
+// pop(): Dequeue from Q1.
+
+// Approach 2: Make pop operation costly
+// push(x): Enqueue x to Q1.
+// pop(): Dequeue all but last element from Q1 to Q2. Dequeue last element from Q1. Swap Q1 and Q2.
+
+10. Recursion and Stack Relationship (Factorial):
+// This is more about understanding the concept than a specific stack implementation.
+// The call stack handles the function calls.
+int factorial(int n) {
+    if (n == 0) {
+        return 1; // Base case
+    }
+    return n * factorial(n - 1); // Recursive call
+}
