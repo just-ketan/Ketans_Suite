@@ -1,0 +1,113 @@
+1. Basic Bitwise Operators:
+void demonstrateBitwiseOperators() {
+    int a = 5;  // 0101
+    int b = 3;  // 0011
+
+    printf("a = %d (binary: %d)\n", a, 0b0101); // Requires C2X or specific compiler extension for 0b
+    printf("b = %d (binary: %d)\n", b, 0b0011);
+
+    printf("a & b = %d (AND)\n", a & b); // 1 (0001)
+    printf("a | b = %d (OR)\n", a | b); // 7 (0111)
+    printf("a ^ b = %d (XOR)\n", a ^ b); // 6 (0110)
+    printf("~a = %d (NOT, two's complement)\n", ~a); // -6
+    printf("a << 1 = %d (Left Shift)\n", a << 1); // 10 (1010)
+    printf("b >> 1 = %d (Right Shift)\n", b >> 1); // 1 (0001)
+}
+
+
+------------------------------------------------------------------------
+
+2. Check if a Number is Even or Odd:
+bool isEven(int n) {
+    return (n & 1) == 0; // If the LSB is 0, it's even
+}
+
+
+------------------------------------------------------------------------
+
+3. Check if the N^{th} Bit is Set/Unset:
+bool isNthBitSet(int num, int n) {
+    return (num & (1 << n)) != 0; // Shift 1 to the Nth position and AND
+}
+
+
+------------------------------------------------------------------------
+
+4. Set/Clear/Toggle the N^{th} Bit:
+int setNthBit(int num, int n) {
+    return num | (1 << n); // OR with a bitmask having Nth bit set
+}
+
+int clearNthBit(int num, int n) {
+    return num & (~(1 << n)); // AND with a bitmask having Nth bit cleared
+}
+
+int toggleNthBit(int num, int n) {
+    return num ^ (1 << n); // XOR with a bitmask having Nth bit set
+}
+
+
+------------------------------------------------------------------------
+
+5. Count Set Bits (Population Count - Brian Kernighan's Algorithm):
+int countSetBits(int n) {
+    int count = 0;
+    while (n > 0) {
+        n &= (n - 1); // This clears the least significant set bit
+        count++;
+    }
+    return count;
+}
+
+
+------------------------------------------------------------------------
+
+6. Swap Two Numbers without a Temporary Variable:
+void swapNumbers(int* x, int* y) {
+    *x = *x ^ *y; // x now holds x^y
+    *y = *x ^ *y; // y now holds (x^y)^y = x
+    *x = *x ^ *y; // x now holds (x^y)^x = y
+}
+
+
+------------------------------------------------------------------------
+
+7. Check if a Number is a Power of Two:
+bool isPowerOfTwo(int n) {
+    return (n > 0) && ((n & (n - 1)) == 0); // Positive and only one set bit
+}
+
+
+------------------------------------------------------------------------
+
+8. Find the Only Non-Repeating Element:
+int findUniqueElement(int arr[], int n) {
+    int result = 0;
+    for (int i = 0; i < n; i++) {
+        result ^= arr[i]; // XORing all elements cancels out pairs
+    }
+    return result;
+}
+
+
+------------------------------------------------------------------------
+
+9. Sign of a Number (without branching):
+(This is for 32-bit signed integers).
+int getSign(int n) {
+    // For positive: 0, For negative: -1, For zero: 0 (or some other convention)
+    // A common trick using right shift on signed integers (arithmetic shift)
+    return (n >> (sizeof(int) * 8 - 1)); // Shifts the sign bit to the rightmost position
+    // If n is 0, it's 0. If n is positive, sign bit is 0, so 0. If n is negative, sign bit is 1, so -1.
+}
+
+------------------------------------------------------------------------
+
+10. Multiply/Divide by Powers of Two:
+int multiplyByPowerOfTwo(int num, int power) {
+    return num << power; // num * (2^power)
+}
+
+int divideByPowerOfTwo(int num, int power) {
+    return num >> power; // num / (2^power)
+}
