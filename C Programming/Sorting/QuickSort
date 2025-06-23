@@ -1,0 +1,57 @@
+/******************************************************************************
+
+Welcome to GDB Online.
+GDB online is an online compiler and debugger tool for C, C++, Python, Java, PHP, Ruby, Perl,
+C#, OCaml, VB, Swift, Pascal, Fortran, Haskell, Objective-C, Assembly, HTML, CSS, JS, SQLite, Prolog.
+Code, Compile, Run and Debug online from anywhere in world.
+
+*******************************************************************************/
+#include <stdio.h>
+
+void swap(int* a, int* b){
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+
+// create pratition
+int partition(int arr[], int low, int high){
+    int pivot = arr[high];
+    int i = low-1;
+    
+    for(int j=low; j<high; j++){
+        if(arr[j] <= pivot){
+            i++;
+            swap(&arr[i], &arr[j]);
+        }
+    }
+    // swap pivot with greater element at i
+    swap(&arr[i+1], &arr[high]);
+    return i+1;
+}
+
+void quicksort(int arr[], int low, int high){
+    if(low < high){
+        int pi = partition(arr, low, high);
+        quicksort(arr, low, pi-1);
+        quicksort(arr,pi+1, high);
+    }
+}
+
+void printarray(int arr[], int n){
+    for(int i=0; i<n; i++){
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+}
+
+int main()
+{
+    int arr[] = { 28, 7, 20, 1, 10, 3 , 6 };
+    int n = sizeof(arr) / sizeof(arr[0]);
+    quicksort(arr, 0, n - 1);
+    printf("Sorted array :");
+    printarray(arr, n);
+
+}
