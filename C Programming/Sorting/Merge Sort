@@ -1,0 +1,77 @@
+/******************************************************************************
+
+Welcome to GDB Online.
+GDB online is an online compiler and debugger tool for C, C++, Python, Java, PHP, Ruby, Perl,
+C#, OCaml, VB, Swift, Pascal, Fortran, Haskell, Objective-C, Assembly, HTML, CSS, JS, SQLite, Prolog.
+Code, Compile, Run and Debug online from anywhere in world.
+
+*******************************************************************************/
+#include <stdio.h>
+
+void merge(int arr[], int l, int m, int r){
+    int n1 = m-l+1; //left half   
+    int n2 = r-m;   // right half
+    
+    int left[n1], right[n2];
+    
+    for(int i=0; i<n1; i++){
+        left[i] = arr[l+i]; // starting from left till mid
+    }
+    for(int j=0; j<n2; j++){
+        right[j] = arr[m+1+j];  // starting from mid till last
+    }
+    
+    int i=0,j=0;
+    int k = l;
+    while(i<n1 && j<n2){
+        if(left[i] <= right[j]){
+            arr[k] = left[i];
+            i++;
+        }else{
+            arr[k] = right[j];
+            j++;
+        }
+        k++;
+    }
+    
+    // copy over rest of the elements
+    while( i <n1){
+        arr[k] = left[i];
+        i++;
+    }
+    while( j<n2){
+        arr[k] = right[j];
+        j++;
+    }
+}
+
+
+void mergesort(int arr[], int left, int right){
+    if(left<right){
+        int mid = (left+right)/2;
+        
+        mergesort(arr, left, mid);
+        mergesort(arr, mid+1, right);
+        
+        merge(arr,left,mid,right);
+    }
+}
+
+
+
+int main()
+{
+    int n;
+    scanf("%d", &n);
+    int arr[n];
+    for(int i=0; i<n; i++){
+        scanf("%d",&arr[i]);
+    }
+    
+    mergesort(arr,0,n-1);
+    
+    for(int i=0; i<n; i++){
+        printf("%d ",arr[i]);
+    }
+    return 0;
+}
